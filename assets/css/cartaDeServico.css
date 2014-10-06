@@ -1,0 +1,149 @@
+/* 
+    Created on : Aug 14, 2014, 2:12:03 PM
+    Author     : Samir Souza <samir.guitar@gmail.com>
+*/
+
+.linkPrimario{
+  color: #6E2D2D;
+}
+.linkPrimario:hover{
+  color: #6E2D2D;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
+  color: white;
+  background-color: #6E2D2D;
+}
+.linkSecundario{
+  color: #6E2D2D;
+}
+.linkSecundario:hover{
+  color: #6E2D2D;
+}
+.body{
+  background-color: #ffffff;
+  min-width: 950px;
+  padding-top: 10px;
+}
+.cdsTitle{
+  height: 100px;
+}
+
+
+.modal-dialog {
+  margin-left: 50px;
+  margin-right: 50px;
+  width:auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.modal-title{
+  font-weight: bolder;
+  color:#6E2D2D;
+}
+.bs-example{
+  margin: 20px; 
+}
+
+
+
+
+
+/*Botões tela inicial*/
+.btn-default{
+  border-color: transparent;
+  background-color: transparent;
+  font-weight: bolder;
+}
+.btn-default:hover{
+  border-color: transparent;
+  background-color: transparent;
+  color: #b54242;
+}
+.btn-default-circular{
+  border-color: transparent;
+  background-color: transparent;
+  font-weight: bolder;
+}
+.btn-default-circular:hover{
+  border-color: transparent;
+  background-color: #b54242;
+}
+
+/*_______primeira linha_________*/
+.cdsContainer{
+  background-image: url(../image/cartaImagem_ok_2.png);
+  background-repeat: no-repeat;
+  background-size: 648px 403px;
+  height: 550px;
+  background-position: center 30px;
+
+}
+
+.cdsBtnGabPPPG{
+  padding-top: -20px;
+}
+.cdsGabPPPGCirc{
+  margin-left: -16px;
+  margin-top: -2px;
+  z-index: 10;
+  position: absolute;
+}
+
+/*_______linha central_________*/
+.divCentroBtns{
+  height: 197px;
+  padding-top: 133px;
+}
+
+.cdsBtnPosGradCirc{
+  margin-left: -321px;
+  margin-top:-3px;
+  position: absolute;
+}
+.cdsBtnPosGrad{
+  margin-left: -444px;
+  margin-top:-6px;
+  position: absolute;
+}
+
+.cdsBtnInovaCirc{
+  margin-left: 288px;
+  margin-top:-3px;
+  z-index: 10;
+  position: absolute;
+}
+.cdsBtnInova{
+  z-index: 0;
+  margin-left: 308px;
+  margin-top:-6px;
+  position: absolute;
+}
+
+/*_______última linha_________*/
+.divAbaixoBtns{
+  height: 170px;
+}
+
+.cdsBtnPesqGradCirc{
+  margin-left: -214px;
+  margin-top:141px;
+  position: absolute;
+}
+.cdsBtnPesqGrad{
+  margin-left: -300px;
+  margin-top:145px;
+  position: absolute;
+}
+
+.cdsBtnProqualiCirc{
+  margin-left: 181px;
+  margin-top:141px;
+  z-index: 10;
+  position: absolute;
+}
+.cdsBtnProquali{
+  z-index: 0;
+  margin-left: 200px;
+  margin-top:144px;
+  position: absolute;
+}
