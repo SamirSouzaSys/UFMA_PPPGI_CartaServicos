@@ -1,6 +1,14 @@
 <?php
-$topMaster = $topMasterBD;
-$topInternos = $topInternosBD;
+require_once './dao/connection_dao.php';
+
+$conexao = new connection_dao();
+$conexao->conectaBd();
+
+$topMaster = $conexao->consultaBd(selTopicoMaster);
+$topInternos = $conexao->consultaBd(selTopicoInterno);
+
+//$topMaster = $topMasterBD;
+//$topInternos = $topInternosBD;
 
 $gabModal = $topMaster[0]['idtopicoMaster'] . 'Master';
 $gabTitulo = $topMaster[0]['btn_titulo'];
@@ -39,12 +47,18 @@ $cartaServModTitulo = $topMaster[5]['ModalTitulo'];
     <meta name="author" content="">
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/cartasAdmin.js"></script>
     <link rel="stylesheet" href="./assets/css/bootstrap-theme.min.css">
     <!-- Bootstrap Core CSS --><link href="./assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS --><link href="./assets/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
     <!-- Custom CSS --><link href="./assets/css/sb-admin-2.css" rel="stylesheet">
     <!-- Custom Fonts --><link href="./assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="./assets/css/cartaDeServico.css" rel="stylesheet" type="text/css"/>
+    <!--[if IE 6]>     <link href="./assets/css/ie/cartaDeServico.css" rel="stylesheet" type="text/css"/> <![endif]-->
+    <!--[if IE 7]>     <link href="./assets/css/ie/cartaDeServico.css" rel="stylesheet" type="text/css"/> <![endif]-->
+    <!--[if IE 8]>     <link href="./assets/css/ie/cartaDeServico.css" rel="stylesheet" type="text/css"/> <![endif]-->
+    <!--[if gte IE 8]> <link href="./assets/css/ie/cartaDeServico.css" rel="stylesheet" type="text/css"/> <![endif]-->
+
   </head>
   <body class="body">
     <!--Carta de serviço-->
@@ -58,7 +72,7 @@ $cartaServModTitulo = $topMaster[5]['ModalTitulo'];
       <!--    gab pppg-->
       <div class="row">
         <div class="text-center">
-          <a href="#<?php echo $gabModal ?>" class="btn btn-default cdsBtnGabPPPG" data-toggle="modal"><?php echo $gabTitulo ?></a>
+          <a href="#<?php echo $gabModal ?>" class="btn btn-default cdsBtnGabPPPG" id="cdsBtnGabPPPG" data-toggle="modal"><?php echo $gabTitulo ?></a>
         </div>
         <div class="text-center">
           <a href="#<?php echo $gabModal ?>" class="btn btn-default-circular btn-circle cdsGabPPPGCirc" data-toggle="modal"></a>

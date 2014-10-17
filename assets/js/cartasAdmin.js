@@ -1,42 +1,357 @@
 $(document).ready(function() {
 
-//Alterna o estado do input de alteraÁ„o do nome do projeto
-  $("#txtNomeProjeto").keypress(function() {
-    if ($(this).val().length > 0) {
-      $(this).parent().removeClass('has-error');
-    } else {
-      $('#txtNomeSetor').parent().addClass('has-error');
-    }
-  });
-//Adiciona novo projeto na tabela
-  $('#buscarTexto').click(function() {
+  var idAtual = '';
+
+  window.onload = function() {
+    CKEDITOR.replace('editorCKEditor');
+  };
+
+
+
+//Cria um novo projeto ou Altera o nome de algum projeto j√° existente
+  $('#buscarTexto').bind('click', function() {
     var selectedTopico = document.getElementById("select-topico");
     var id = selectedTopico.options[selectedTopico.selectedIndex].value;
-//    var url = 'localhost/sites/pppg.dev/pppg_carta_CI/';
-    url = 'getTxtTituloTopico';
 
-    $.post(url, {idTopico: id}, function(response) {
-//      alert("response: " + response);
+    $.post("../dao/postTopicoData.php",
+            {idTopico: id}, function(response) {
       if (response !== null) {
-        console.log("antes: ");
-        var data = $.parseJSON(response);
-        console.log("data: " + data);
-        if (data.success) {
-          console.log("TÌtulo: " + data.resposta);
-          console.log("Texto: " + data.resposta);
-          console.log("id: " + id);
-          alert("ok");
+        var data = response;
+        var titulo, texto;
 
-          $.find('#tituloTop').val(data.resposta['titulo']);
-          $.find('#texTop').val(data.resposta['texto']);
-          $.find('#txtIdAtual').val(id);
+        var stringParts = data.split('9------------------9', 2);
+        titulo = stringParts[0];
+        texto = stringParts[1];
 
-
-        }
+        $('#tituloTop').val(titulo);
+        CKEDITOR.instances.editorCKEditor.setData(texto);
+        idAtual = id;
+      } else {
+        alert("problem");
       }
     });
   });
+
+  $('#salvarTexto').bind('click', function() {
+//    var selectedTopico = document.getElementById("select-topico");
+//    var id = selectedTopico.options[selectedTopico.selectedIndex].value;
+    novoTitulo = $('#tituloTop').val();
+    novoTexto = CKEDITOR.instances.editorCKEditor.getData();
+    $.post("../dao/postSaveTopicoData.php",
+            {idTopico: idAtual,
+              titulo: novoTitulo,
+              texto: novoTexto}, function(response) {
+      if (response !== -1) {
+        alert("AlteraÁ„o salva com sucesso!");
+
+      } else {
+        alert("Ocorreu um problema durante a alteraÁ„o do tÛpico");
+      }
+//      if (response !== null) {
+//        alert("ok");
+//      } else {
+//        alert("problem");
+//      }
+    });
+  });
+
+
+//BOT’ES INDEX
+// Gabinete PPPG - Seleciona o bot„o no momento em que o CÌrculo for selecionado
+  $("a.cdsGabPPPGCirc")
+          .mouseover(function() {
+            $("a.cdsBtnGabPPPG").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsGabPPPGCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnGabPPPG").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsGabPPPGCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
+// Gabinete PPPG - Seleciona o bot„o CIRCULAR no momento em que obot„o for selecionado
+  $("a.cdsBtnGabPPPG")
+          .mouseover(function() {
+            $("a.cdsBtnGabPPPG").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsGabPPPGCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnGabPPPG").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsGabPPPGCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
+
+// PÛs - GraduaÁ„o - Seleciona o bot„o no momento em que o CÌrculo for selecionado
+  $("a.cdsBtnPosGradCirc")
+          .mouseover(function() {
+            $("a.cdsBtnPosGrad").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsBtnPosGradCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnPosGrad").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsBtnPosGradCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
+// PÛs - GraduaÁ„o - Seleciona o bot„o CIRCULAR no momento em que obot„o for selecionado
+  $("a.cdsBtnPosGrad")
+          .mouseover(function() {
+            $("a.cdsBtnPosGrad").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsBtnPosGradCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnPosGrad").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsBtnPosGradCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
+
+// InovaÁ„o - Seleciona o bot„o no momento em que o CÌrculo for selecionado
+  $("a.cdsBtnInovaCirc")
+          .mouseover(function() {
+            $("a.cdsBtnInova").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsBtnInovaCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnInova").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsBtnInovaCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
+// InovaÁ„o - Seleciona o bot„o CIRCULAR no momento em que obot„o for selecionado
+  $("a.cdsBtnInova")
+          .mouseover(function() {
+            $("a.cdsBtnInova").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsBtnInovaCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnInova").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsBtnInovaCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
+
+  // Pesquisa - Seleciona o bot„o no momento em que o CÌrculo for selecionado
+  $("a.cdsBtnPesqGradCirc")
+          .mouseover(function() {
+            $("a.cdsBtnPesqGrad").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsBtnPesqGradCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnPesqGrad").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsBtnPesqGradCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
+// Pesquisa - Seleciona o bot„o CIRCULAR no momento em que obot„o for selecionado
+  $("a.cdsBtnPesqGrad")
+          .mouseover(function() {
+            $("a.cdsBtnPesqGrad").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsBtnPesqGradCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnPesqGrad").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsBtnPesqGradCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
+
+// Proquali - Seleciona o bot„o no momento em que o CÌrculo for selecionado
+  $("a.cdsBtnProqualiCirc")
+          .mouseover(function() {
+            $("a.cdsBtnProquali").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsBtnProqualiCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnProquali").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsBtnProqualiCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
+// Proquali - Seleciona o bot„o CIRCULAR no momento em que obot„o for selecionado
+  $("a.cdsBtnProquali")
+          .mouseover(function() {
+            $("a.cdsBtnProquali").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'color': '#b54242'
+            });
+            $("a.cdsBtnProqualiCirc").css({
+              'border-color': 'transparent',
+              'background-color': '#b54242'
+            });
+          })
+          .mouseout(function() {
+            $("a.cdsBtnProquali").css({
+              'border': 'none',
+              'background-color': 'transparent',
+              'font-weight': 'bolder',
+              'box-shadow': 0,
+              'color': '#333'
+            });
+            $("a.cdsBtnProqualiCirc").css({
+              'border-color': 'transparent',
+              'background-color': 'transparent',
+              'font-weight': 'bolder'
+            });
+          });
 });
+
+
+
+
+
+
+
+
+//$("div.overout")
+//        .mouseover(function() {
+//          i += 1;
+//          $(this).find("span").text("mouse over x " + i);
+//        })
+//        .mouseout(function() {
+//          $(this).find("span").text("mouse out ");
+//        });
+// 
+// 
+//
+//
 //
 //
 ////          'titulo' => $arrayTopicoInternEscolhido[`TituloTopico`], 'texto' => $arrayTopicoInternEscolhido[`TextoTopico`]          
@@ -139,68 +454,7 @@ $(document).ready(function() {
 //  $('#btnSalvarAlterarNao').on('click', function() {
 //    $('#txtNomeProjeto').val('');
 //  });
-//  //Cria um novo projeto ou Altera o nome de algum projeto j√° existente
-//  $("#btnSalvarAlteracao").on('click', function() {
-//    var newName = $('#txtNomeProjeto').val();
-//    //Adiciona Projeto
-//    if (modalAction === 'adicionar') {
-//      if (newName !== '') {
-//        var htmlTable = '';
-//        var url = js_site_url('index.php/projetos/salvar');
-//        $.post(url, {projeto: newName}, function(response) {
-//          if (response !== null) {
-//            var data = $.parseJSON(response);
-//            if (data.success) {
-//              htmlTable = htmlTable + '   <tr data-tr="' + data.idProjeto + '">';
-//              htmlTable = htmlTable + '       <td>';
-//              htmlTable = htmlTable + '           <p class="projname"><span>' + newName + '</span></p>';
-//              htmlTable = htmlTable + '       </td>';
-//              htmlTable = htmlTable + '       <td>';
-//              htmlTable = htmlTable + '            <div class="btn-group action">';
-//              htmlTable = htmlTable + '               <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">';
-//              htmlTable = htmlTable + '                   A√ß√£o&nbsp';
-//              htmlTable = htmlTable + '                   &nbsp';
-//              htmlTable = htmlTable + '                   &nbsp';
-//              htmlTable = htmlTable + '                   <span class="caret"></span>';
-//              htmlTable = htmlTable + '               </button>';
-//              htmlTable = htmlTable + '               <ul class="dropdown-menu" role="menu">';
-//              htmlTable = htmlTable + '                   <li> <a href="#" data-toggle="modal" data-target="#modalNewEdit"> <span class="glyphicon glyphicon-pencil"></span>Editar</a> </li>';
-//              htmlTable = htmlTable + '                   <li> <a href="#" data-toggle="modal" data-target="#modalDelete"><span class="glyphicon glyphicon-remove-circle"> </span> Excluir</a> </li>';
-//              htmlTable = htmlTable + '               </ul>';
-//              htmlTable = htmlTable + '           </div>';
-//              htmlTable = htmlTable + '       </td>';
-//              htmlTable = htmlTable + '   </tr>';
-//              $('#tbProjetos').append(htmlTable);
-//              initDropdownToggle($(".dropdown-toggle"));
-//            }
-//            initNotification(data);
-//            $('#txtNomeProjeto').val('');
-//          }
-//        }
-//        );
-//        $("#modalNewEdit").modal('toggle');
-//      } else {
-//        $('#txtNomeProjeto').parent().addClass('has-error');
-//        //Altera nome de um projeto    
-//      }
-//    } else {
-//      if (newName !== '') {
-//        $.post(js_site_url('index.php/projetos/alterar'), {idProjeto: ID_ultimoProjetoSelecionado, newName: newName}, function(response) {
-//          if (response !== null) {
-//            var data = $.parseJSON(response);
-//            if (data['success'] === true) {
-//              $('#txtNomeProjeto').val('');
-//              atualizarNomeProjeto(ID_ultimoProjetoSelecionado, newName);
-//            }
-//            initNotification(data);
-//          }
-//        });
-//        $("#modalNewEdit").modal('toggle');
-//      } else {
-//        $('#txtNomeProjeto').parent().addClass('has-error');
-//      }
-//    }
-//  });
+
 //  //Remove um projeto da table
 //  $(document).on('click', '#btnExcluirSim', function() {
 //    $.post(js_site_url('index.php/projetos/excluir'),
@@ -215,4 +469,3 @@ $(document).ready(function() {
 //    });
 //    $("#modalDelete").modal('toggle');
 //  });
-//});
